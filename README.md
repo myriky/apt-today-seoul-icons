@@ -6,6 +6,8 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg?style=flat-square)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/badge/License-Custom-orange.svg?style=flat-square)](./LICENSE)
 
+![Seoul Icons Preview](https://myriky.github.io/apt-today-seoul-icons/preview.png)
+
 서울시 25개 행정구 아이콘을 React 컴포넌트로 제공하는 라이브러리입니다.
 
 🌐 [데모 페이지](https://myriky.github.io/apt-today-seoul-icons/)
