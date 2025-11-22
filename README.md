@@ -1,17 +1,17 @@
-# react-seoul-icons
+# @apt.today/react-seoul-icons
 
 서울시 25개 행정구 아이콘을 React 컴포넌트로 제공하는 라이브러리입니다.
 
 ## 설치
 
 ```bash
-npm install react-seoul-icons
+npm install @apt.today/react-seoul-icons
 ```
 
 또는
 
 ```bash
-yarn add react-seoul-icons
+yarn add @apt.today/react-seoul-icons
 ```
 
 ## 사용법
@@ -19,7 +19,7 @@ yarn add react-seoul-icons
 ### 개별 컴포넌트 Import
 
 ```tsx
-import { GangnamGu, JongnoGu, MapoGu } from "react-seoul-icons";
+import { GangnamGu, JongnoGu, MapoGu } from "@apt.today/react-seoul-icons";
 
 function App() {
   return (
@@ -35,7 +35,7 @@ function App() {
 ### 모든 컴포넌트 Import
 
 ```tsx
-import * as SeoulIcons from "react-seoul-icons";
+import * as SeoulIcons from "@apt.today/react-seoul-icons";
 
 function App() {
   return <SeoulIcons.GangnamGu className="w-12 h-12" />;
@@ -44,33 +44,33 @@ function App() {
 
 ## 지원하는 행정구
 
-| 컴포넌트명 | 행정구 |
-|------------|--------|
-| `DobongGu` | 도봉구 |
-| `DongdaemunGu` | 동대문구 |
-| `DongjakGu` | 동작구 |
-| `EunpyeongGu` | 은평구 |
-| `GangbukGu` | 강북구 |
-| `GangdongGu` | 강동구 |
-| `GangnamGu` | 강남구 |
-| `GangseoGu` | 강서구 |
-| `GeumcheonGu` | 금천구 |
-| `GuroGu` | 구로구 |
-| `GwanakGu` | 관악구 |
-| `GwangjinGu` | 광진구 |
-| `JongnoGu` | 종로구 |
-| `JungGu` | 중구 |
-| `JungnangGu` | 중랑구 |
-| `MapoGu` | 마포구 |
-| `NowonGu` | 노원구 |
-| `SeochoGu` | 서초구 |
-| `SeodaemunGu` | 서대문구 |
-| `SeongbukGu` | 성북구 |
-| `SeongdongGu` | 성동구 |
-| `SongpaGu` | 송파구 |
-| `YangcheonGu` | 양천구 |
+| 컴포넌트명       | 행정구   |
+| ---------------- | -------- |
+| `DobongGu`       | 도봉구   |
+| `DongdaemunGu`   | 동대문구 |
+| `DongjakGu`      | 동작구   |
+| `EunpyeongGu`    | 은평구   |
+| `GangbukGu`      | 강북구   |
+| `GangdongGu`     | 강동구   |
+| `GangnamGu`      | 강남구   |
+| `GangseoGu`      | 강서구   |
+| `GeumcheonGu`    | 금천구   |
+| `GuroGu`         | 구로구   |
+| `GwanakGu`       | 관악구   |
+| `GwangjinGu`     | 광진구   |
+| `JongnoGu`       | 종로구   |
+| `JungGu`         | 중구     |
+| `JungnangGu`     | 중랑구   |
+| `MapoGu`         | 마포구   |
+| `NowonGu`        | 노원구   |
+| `SeochoGu`       | 서초구   |
+| `SeodaemunGu`    | 서대문구 |
+| `SeongbukGu`     | 성북구   |
+| `SeongdongGu`    | 성동구   |
+| `SongpaGu`       | 송파구   |
+| `YangcheonGu`    | 양천구   |
 | `YeongdeungpoGu` | 영등포구 |
-| `YongsanGu` | 용산구 |
+| `YongsanGu`      | 용산구   |
 
 ## Props
 
@@ -81,6 +81,7 @@ interface IconProps extends React.SVGProps<SVGSVGElement> {}
 ```
 
 일반적으로 사용되는 props:
+
 - `className`: CSS 클래스명
 - `style`: 인라인 스타일
 - `width`: 너비
@@ -93,19 +94,17 @@ interface IconProps extends React.SVGProps<SVGSVGElement> {}
 ### Tailwind CSS와 함께 사용
 
 ```tsx
-import { GangnamGu } from "react-seoul-icons";
+import { GangnamGu } from "@apt.today/react-seoul-icons";
 
 function Example() {
-  return (
-    <GangnamGu className="w-16 h-16 text-blue-500 hover:text-blue-700" />
-  );
+  return <GangnamGu className="w-16 h-16 text-blue-500 hover:text-blue-700" />;
 }
 ```
 
 ### 동적 아이콘 렌더링
 
 ```tsx
-import * as SeoulIcons from "react-seoul-icons";
+import * as SeoulIcons from "@apt.today/react-seoul-icons";
 
 const districts = ["GangnamGu", "MapoGu", "JongnoGu"];
 
@@ -123,9 +122,16 @@ function Example() {
 
 ## 라이선스
 
-MIT
+### 아이콘 저작권
+
+본 라이브러리의 아이콘은 서울특별시 각 자치구청의 공식 심볼/로고로, 공공누리 제1유형(출처표시)에 따라 자유롭게 이용할 수 있습니다.
+
+### 라이브러리 코드
+
+본 라이브러리의 소스 코드는 MIT 라이선스를 따릅니다.
+
+자세한 내용은 [LICENSE](./LICENSE) 파일을 참고하세요
 
 ## 기여
 
 이슈 제보 및 풀 리퀘스트는 언제나 환영합니다!
-
