@@ -348,3 +348,164 @@ footer code {
 .dark-mode .footer-link:hover {
   color: #93c5fd;
 }
+
+/* Demo Section */
+.demo-section {
+  margin-bottom: 3rem;
+}
+
+.demo-section h2 {
+  margin-bottom: 1.5rem;
+}
+
+.light-mode .demo-section h2 {
+  color: #1a1a1a;
+}
+
+.dark-mode .demo-section h2 {
+  color: #e5e5e5;
+}
+
+.demo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.demo-box {
+  padding: 1.5rem;
+  border: 2px solid;
+  border-radius: 12px;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.light-mode .demo-box {
+  background: #fff;
+  border-color: #e5e5e5;
+}
+
+.dark-mode .demo-box {
+  background: #2a2a2a;
+  border-color: #404040;
+}
+
+.demo-box:hover {
+  border-color: #3b82f6;
+}
+
+.demo-box h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+  font-family: "Courier New", monospace;
+}
+
+.light-mode .demo-box h3 {
+  color: #3b82f6;
+}
+
+.dark-mode .demo-box h3 {
+  color: #60a5fa;
+}
+
+.demo-box p {
+  margin: 0 0 1rem 0;
+  font-size: 0.9rem;
+}
+
+.light-mode .demo-box p {
+  color: #666;
+}
+
+.dark-mode .demo-box p {
+  color: #999;
+}
+
+.demo-icon {
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.demo-box code {
+  font-size: 0.85rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.light-mode .demo-box code {
+  background: #f5f5f5;
+  color: #333;
+}
+
+.dark-mode .demo-box code {
+  background: #1a1a1a;
+  color: #e5e5e5;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 2px solid;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  transition: all 0.2s;
+}
+
+.light-mode .search-input {
+  background: #fff;
+  border-color: #e5e5e5;
+  color: #333;
+}
+
+.dark-mode .search-input {
+  background: #1a1a1a;
+  border-color: #404040;
+  color: #e5e5e5;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+.search-input::placeholder {
+  color: #999;
+}
+
+.no-result,
+.placeholder {
+  font-size: 0.9rem;
+}
+
+.light-mode .no-result {
+  color: #ef4444;
+}
+
+.dark-mode .no-result {
+  color: #f87171;
+}
+
+.light-mode .placeholder {
+  color: #999;
+}
+
+.dark-mode .placeholder {
+  color: #666;
+}
+
+.mini-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.mini-icons span {
+  font-size: 1.2rem;
+  color: #999;
+}
