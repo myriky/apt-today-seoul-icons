@@ -1,20 +1,49 @@
 export * from "./components";
 export {
-  // 아이콘 가져오기
+  // ============================================
+  // 시도 (Sido) 관련
+  // ============================================
+  getSidoIcon,
+  getSidoInfo,
+  getSidoByShortName,
+  getAllSidoInfo,
+  getAvailableSidoInfo,
+
+  // ============================================
+  // 시군구 (Sigungu) 관련
+  // ============================================
+  getSigunguIcon,
+  getSigunguInfo,
+  getSigunguBySido,
+  getAllSigunguInfo,
+  getSigunguIconByName,
+
+  // ============================================
+  // 유틸리티
+  // ============================================
+  getAllCodes,
+  isValidCode,
+
+  // ============================================
+  // 하위 호환성 (deprecated)
+  // ============================================
   getIconByCode,
   getIconByName,
-  // 정보 조회
   getNameByCode,
   getDistrictInfo,
   getAllDistrictInfo,
   getDistrictsByRegion,
-  // 유틸리티
-  getAllCodes,
-  isValidCode,
-  // 하위 호환성
   getAllGuInfo,
   seoulGuIconMap,
+
+  // ============================================
   // 타입
+  // ============================================
+  type SidoCode,
+  type SidoInfo,
+  type SigunguInfo,
+  type IconComponent,
+  // 하위 호환성 타입
   type RegionCode,
   type SeoulGuCode,
   type SeoulGuIconComponent,

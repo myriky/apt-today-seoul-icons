@@ -1,15 +1,28 @@
 import { useState } from "react";
 import {
-  // 컴포넌트 직접 Import
+  // 시도 컴포넌트
+  Seoul,
+  Gyeonggi,
+  // 시군구 컴포넌트
   GangnamGu,
   MapoGu,
   JongnoGu,
-  // 헬퍼 함수
+  // 시도 헬퍼 함수
+  getSidoIcon,
+  getAllSidoInfo,
+  getAvailableSidoInfo,
+  // 시군구 헬퍼 함수
+  getSigunguIcon,
+  getSigunguBySido,
+  getSigunguIconByName,
+  // 하위 호환성 함수
   getAllDistrictInfo,
   getIconByCode,
   getIconByName,
   getDistrictsByRegion,
   type DistrictInfo,
+  type SidoInfo,
+  type SigunguInfo,
 } from "@apt.today/react-seoul-icons";
 import "./App.css";
 
@@ -18,17 +31,40 @@ function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [searchName, setSearchName] = useState("");
 
+  // 시도 정보 가져오기
+  const allSido: readonly SidoInfo[] = getAllSidoInfo();
+  const availableSido = allSido.filter((s) => s.component !== null);
+
+  // 시군구가 있는 시도 목록 (갤러리용)
+  const sidoWithSigungu = getAvailableSidoInfo().filter((sido) => {
+    const sigunguList = getSigunguBySido(sido.code);
+    return sigunguList.length > 0;
+  });
+
+  // 시도 코드로 아이콘 가져오기
+  const SeoulIcon = getSidoIcon(11);
+
   // 헬퍼를 통해 서울시 모든 구 정보 가져오기
   const districts: readonly DistrictInfo[] = getAllDistrictInfo();
 
   // 또는 특정 지역만 가져오기
   const seoulDistricts = getDistrictsByRegion("서울");
 
+  // 새로운 API: 시군구 정보
+  const seoulSigungu = getSigunguBySido(11);
+  const gyeonggiSigungu = getSigunguBySido(41);
+
   // 코드로 아이콘 가져오기 예시
   const GangnamIcon = getIconByCode(11680);
 
+  // 새로운 API: 시군구 코드로 아이콘 가져오기
+  const GangnamIcon2 = getSigunguIcon(11680);
+
   // 이름으로 아이콘 검색
   const SearchedIcon = searchName ? getIconByName(searchName) : null;
+
+  // 새로운 API: 이름으로 시군구 아이콘 검색
+  const SearchedIcon2 = searchName ? getSigunguIconByName(searchName) : null;
 
   return (
     <div className={`app ${darkMode ? "dark-mode" : "light-mode"}`}>
@@ -36,7 +72,7 @@ function App() {
         <div className="header-top">
           <div>
             <h1>🏙️ @apt.today/react-seoul-icons</h1>
-            <p>서울시 25개 행정구 아이콘 React 컴포넌트 라이브러리</p>
+            <p>대한민국 광역/기초자치단체 로고 아이콘 React 라이브러리</p>
           </div>
           <button
             className="theme-toggle"
@@ -64,14 +100,66 @@ function App() {
       </section>
 
       <section className="demo-section">
-        <h2>🎯 사용 방법 데모</h2>
+        <h2>🏛️ 시도 아이콘</h2>
+
+        <div className="demo-grid">
+          <div className="demo-box highlight">
+            <h3>서울특별시</h3>
+            <p>import {"{ Seoul }"} from '...'</p>
+            <div className="demo-icon">
+              <Seoul width={iconSize} height={iconSize} />
+            </div>
+            <code>&lt;Seoul /&gt;</code>
+          </div>
+
+          <div className="demo-box highlight">
+            <h3>경기도</h3>
+            <p>import {"{ Gyeonggi }"} from '...'</p>
+            <div className="demo-icon">
+              <Gyeonggi width={iconSize} height={iconSize} />
+            </div>
+            <code>&lt;Gyeonggi /&gt;</code>
+          </div>
+
+          <div className="demo-box">
+            <h3>getSidoIcon(11)</h3>
+            <p>시도 코드로 아이콘 가져오기</p>
+            <div className="demo-icon">
+              {SeoulIcon && <SeoulIcon width={iconSize} height={iconSize} />}
+            </div>
+            <code>서울특별시 (코드: 11)</code>
+          </div>
+
+          <div className="demo-box">
+            <h3>아이콘 보유 시도</h3>
+            <p>
+              {availableSido.length}개 / 전체 {allSido.length}개
+            </p>
+            <div className="mini-icons">
+              {availableSido.map(
+                (s) =>
+                  s.component && (
+                    <s.component
+                      key={s.code}
+                      width={iconSize * 0.75}
+                      height={iconSize * 0.75}
+                    />
+                  )
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="demo-section">
+        <h2>🏘️ 시군구 아이콘</h2>
 
         <div className="demo-grid">
           <div className="demo-box">
             <h3>컴포넌트 직접 사용</h3>
             <p>import {"{ GangnamGu }"} from '...'</p>
             <div className="demo-icon">
-              <GangnamGu width={80} height={80} />
+              <GangnamGu width={iconSize} height={iconSize} />
             </div>
             <code>&lt;GangnamGu /&gt;</code>
           </div>
@@ -80,8 +168,8 @@ function App() {
             <h3>여러 컴포넌트 사용</h3>
             <p>import {"{ MapoGu, JongnoGu }"} from '...'</p>
             <div className="demo-icon" style={{ display: "flex", gap: "8px" }}>
-              <MapoGu width={60} height={60} />
-              <JongnoGu width={60} height={60} />
+              <MapoGu width={iconSize * 0.8} height={iconSize * 0.8} />
+              <JongnoGu width={iconSize * 0.8} height={iconSize * 0.8} />
             </div>
             <code>&lt;MapoGu /&gt; &lt;JongnoGu /&gt;</code>
           </div>
@@ -90,7 +178,9 @@ function App() {
             <h3>getIconByCode(11680)</h3>
             <p>행정구역 코드로 아이콘 가져오기</p>
             <div className="demo-icon">
-              {GangnamIcon && <GangnamIcon width={80} height={80} />}
+              {GangnamIcon && (
+                <GangnamIcon width={iconSize} height={iconSize} />
+              )}
             </div>
             <code>강남구</code>
           </div>
@@ -106,7 +196,7 @@ function App() {
             />
             <div className="demo-icon">
               {SearchedIcon ? (
-                <SearchedIcon width={80} height={80} />
+                <SearchedIcon width={iconSize} height={iconSize} />
               ) : searchName ? (
                 <span className="no-result">결과 없음</span>
               ) : (
@@ -116,32 +206,92 @@ function App() {
           </div>
 
           <div className="demo-box">
+            <h3>getSigunguBySido(11)</h3>
+            <p>서울시 시군구: {seoulSigungu.length}개</p>
+            <div className="mini-icons">
+              {seoulSigungu.slice(0, 5).map((d) => (
+                <d.component
+                  key={d.code}
+                  width={iconSize * 0.5}
+                  height={iconSize * 0.5}
+                />
+              ))}
+              <span>...</span>
+            </div>
+            <code>새로운 API ⭐</code>
+          </div>
+
+          <div className="demo-box">
             <h3>getDistrictsByRegion("서울")</h3>
             <p>서울시 구 개수: {seoulDistricts.length}개</p>
             <div className="mini-icons">
               {seoulDistricts.slice(0, 5).map((d) => (
-                <d.component key={d.code} width={32} height={32} />
+                <d.component
+                  key={d.code}
+                  width={iconSize * 0.5}
+                  height={iconSize * 0.5}
+                />
               ))}
               <span>...</span>
             </div>
+            <code>하위 호환성</code>
+          </div>
+
+          <div className="demo-box">
+            <h3>getSigunguBySido(41)</h3>
+            <p>경기도 시군구: {gyeonggiSigungu.length}개</p>
+            <div className="mini-icons">
+              {gyeonggiSigungu.slice(0, 5).map((d) => (
+                <d.component
+                  key={d.code}
+                  width={iconSize * 0.5}
+                  height={iconSize * 0.5}
+                />
+              ))}
+              <span>...</span>
+            </div>
+            <code>경기도 시군구 ⭐</code>
           </div>
         </div>
       </section>
 
       <section className="gallery">
         <h2>전체 아이콘 갤러리</h2>
-        <div className="icon-grid">
-          {districts.map((district) => {
-            const Icon = district.component;
-            return (
-              <div key={district.code} className="icon-item">
-                <Icon width={iconSize} height={iconSize} />
-                <span className="icon-label">{district.name}</span>
-                <code className="icon-name">{district.code}</code>
+
+        {sidoWithSigungu.map((sido) => {
+          const sigunguList: SigunguInfo[] = getSigunguBySido(sido.code);
+          const SidoIcon = sido.component;
+
+          return (
+            <div key={sido.code} className="sido-section">
+              <div className="sido-header">
+                {SidoIcon && (
+                  <SidoIcon
+                    width={32}
+                    height={32}
+                    className="sido-header-icon"
+                  />
+                )}
+                <h3>{sido.name}</h3>
+                <span className="sido-count">
+                  {sigunguList.length}개 시군구
+                </span>
               </div>
-            );
-          })}
-        </div>
+              <div className="icon-grid">
+                {sigunguList.map((sigungu) => {
+                  const Icon = sigungu.component;
+                  return (
+                    <div key={sigungu.code} className="icon-item">
+                      <Icon width={iconSize} height={iconSize} />
+                      <span className="icon-label">{sigungu.name}</span>
+                      <code className="icon-name">{sigungu.code}</code>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
       </section>
 
       <section className="examples">

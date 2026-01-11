@@ -8,9 +8,31 @@
 
 ![Seoul Icons Preview](https://myriky.github.io/apt-today-react-seoul-icons/preview.png)
 
-서울시 25개 행정구 아이콘을 React 컴포넌트로 제공하는 라이브러리입니다.
+대한민국 광역자치단체(시/도) 및 기초자치단체(시/군/구) 로고 아이콘을 React 컴포넌트로 제공하는 라이브러리입니다.
 
 🌐 [데모 페이지](https://myriky.github.io/apt-today-react-seoul-icons/)
+
+## 지원 행정구역
+
+### 시도 (광역시/도)
+
+| 시도       | 코드 | 컴포넌트명 |
+| ---------- | ---- | ---------- |
+| 서울특별시 | `11` | `Seoul`    |
+| 부산광역시 | `26` | `Busan`    |
+| 대구광역시 | `27` | `Daegu`    |
+| 인천광역시 | `28` | `Incheon`  |
+| 울산광역시 | `31` | `Ulsan`    |
+| 경기도     | `41` | `Gyeonggi` |
+
+### 시군구
+
+- **서울특별시**: 25개 자치구 (강남구, 종로구, 마포구 등)
+- **경기도**: 13개 시 (수원시, 고양시, 용인시, 화성시, 성남시, 안양시, 광명시, 과천시, 구리시, 남양주시, 하남시, 의왕시, 김포시)
+- **부산광역시**: 해운대구
+- **대구광역시**: 수성구
+- **인천광역시**: 연수구
+- **울산광역시**: 남구
 
 ## 설치
 
@@ -29,14 +51,65 @@ yarn add @apt.today/react-seoul-icons
 ### 개별 컴포넌트 Import
 
 ```tsx
-import { GangnamGu, JongnoGu, MapoGu } from "@apt.today/react-seoul-icons";
+import {
+  Seoul,
+  GangnamGu,
+  JongnoGu,
+  MapoGu,
+} from "@apt.today/react-seoul-icons";
 
 function App() {
   return (
     <div>
+      <Seoul width={64} height={64} />
       <GangnamGu className="w-12 h-12" />
       <JongnoGu style={{ width: 48, height: 48 }} />
       <MapoGu width={48} height={48} />
+    </div>
+  );
+}
+```
+
+### 시도 아이콘 사용
+
+```tsx
+import {
+  Seoul,
+  Busan,
+  Incheon,
+  Gyeonggi,
+  getSidoIcon,
+} from "@apt.today/react-seoul-icons";
+
+function App() {
+  // 직접 Import
+  return <Seoul width={64} height={64} />;
+
+  // 또는 코드로 가져오기
+  const SeoulIcon = getSidoIcon(11);
+  return SeoulIcon && <SeoulIcon width={64} height={64} />;
+}
+```
+
+### 시군구 아이콘 사용
+
+```tsx
+import { getSigunguIcon, getSigunguBySido } from "@apt.today/react-seoul-icons";
+
+function App() {
+  // 코드로 시군구 아이콘 가져오기
+  const GangnamIcon = getSigunguIcon(11680);
+
+  // 시도별 시군구 목록 가져오기
+  const seoulDistricts = getSigunguBySido(11);
+  const gyeonggiCities = getSigunguBySido(41);
+
+  return (
+    <div>
+      {GangnamIcon && <GangnamIcon width={48} height={48} />}
+      {seoulDistricts.map((d) => (
+        <d.component key={d.code} width={32} height={32} />
+      ))}
     </div>
   );
 }
@@ -50,6 +123,7 @@ import * as SeoulIcons from "@apt.today/react-seoul-icons";
 function App() {
   return (
     <div>
+      <SeoulIcons.Seoul width={64} />
       <SeoulIcons.GangnamGu width={48} />
       <SeoulIcons.JongnoGu className="w-12 h-12" />
     </div>
@@ -81,16 +155,21 @@ function App() {
 ### 행정구역 코드로 아이콘 가져오기 ⭐
 
 ```tsx
-import { getIconByCode } from "@apt.today/react-seoul-icons";
+import { getSidoIcon, getSigunguIcon } from "@apt.today/react-seoul-icons";
 
 function App() {
-  const GangnamIcon = getIconByCode(11680); // 강남구
-  const JungIcon = getIconByCode(11140); // 중구
+  // 시도 아이콘
+  const SeoulIcon = getSidoIcon(11);
+  const BusanIcon = getSidoIcon(26);
+
+  // 시군구 아이콘
+  const GangnamIcon = getSigunguIcon(11680);
+  const HaeundaeIcon = getSigunguIcon(26350);
 
   return (
     <div>
+      {SeoulIcon && <SeoulIcon width={64} height={64} />}
       {GangnamIcon && <GangnamIcon width={48} height={48} />}
-      {JungIcon && <JungIcon width={48} height={48} />}
     </div>
   );
 }
@@ -99,46 +178,46 @@ function App() {
 ### 이름으로 아이콘 가져오기
 
 ```tsx
-import { getIconByName } from "@apt.today/react-seoul-icons";
+import { getSigunguIconByName } from "@apt.today/react-seoul-icons";
 
 // 다양한 형식 지원
-const Icon1 = getIconByName("강남구"); // ✅
-const Icon2 = getIconByName("강남"); // ✅
-const Icon3 = getIconByName("서울특별시 강남구"); // ✅
-const Icon4 = getIconByName("서울 강남구"); // ✅
+const Icon1 = getSigunguIconByName("강남구"); // ✅
+const Icon2 = getSigunguIconByName("강남"); // ✅
+const Icon3 = getSigunguIconByName("서울특별시 강남구"); // ✅
 
-// 중복되는 이름(중구 등)은 region 옵션 필요
-const SeoulJung = getIconByName("중구", { region: "서울" }); // ✅
-const BusanJung = getIconByName("중구", { region: "부산" }); // ✅ (추후 지원)
+// 중복되는 이름(남구 등)은 sidoCode 옵션 필요
+const UlsanNam = getSigunguIconByName("남구", { sidoCode: 31 }); // ✅ 울산 남구
 ```
 
 ### 모든 지역 정보 가져오기
 
 ```tsx
 import {
-  getAllDistrictInfo,
-  getDistrictsByRegion,
+  getAllSidoInfo,
+  getAllSigunguInfo,
+  getSigunguBySido,
 } from "@apt.today/react-seoul-icons";
 
-// 모든 지역 정보
-const allDistricts = getAllDistrictInfo();
+// 모든 시도 정보
+const allSido = getAllSidoInfo();
 
-// 서울시만 가져오기
-const seoulDistricts = getDistrictsByRegion("서울");
+// 모든 시군구 정보
+const allSigungu = getAllSigunguInfo();
+
+// 특정 시도의 시군구만 가져오기
+const seoulDistricts = getSigunguBySido(11);
+const gyeonggiCities = getSigunguBySido(41);
 
 function App() {
   return (
     <div>
-      {seoulDistricts.map((district) => {
-        const Icon = district.component;
-        return (
-          <div key={district.code}>
-            <Icon width={48} height={48} />
-            <span>{district.name}</span>
-            <code>{district.code}</code>
-          </div>
-        );
-      })}
+      {seoulDistricts.map((district) => (
+        <div key={district.code}>
+          <district.component width={48} height={48} />
+          <span>{district.name}</span>
+          <code>{district.code}</code>
+        </div>
+      ))}
     </div>
   );
 }
@@ -146,45 +225,86 @@ function App() {
 
 ## API 레퍼런스
 
-### 아이콘 가져오기
+### 시도 관련 함수
 
-| 함수                            | 설명                            | 반환 타입                             |
-| ------------------------------- | ------------------------------- | ------------------------------------- |
-| `getIconByCode(code)`           | 행정구역 코드로 아이콘 가져오기 | `Component \| undefined`              |
-| `getIconByName(name, options?)` | 이름으로 아이콘 가져오기        | `Component \| undefined`              |
-| `getDistrictInfo(code)`         | 행정구역 코드로 정보 가져오기   | `DistrictInfo \| undefined`           |
-| `getNameByCode(code)`           | 행정구역 코드로 이름 가져오기   | `string \| undefined`                 |
-| `getAllDistrictInfo()`          | 모든 지역 정보 가져오기         | `readonly DistrictInfo[]`             |
-| `getDistrictsByRegion(region)`  | 특정 시/도의 지역 정보          | `DistrictInfo[]`                      |
-| `getAllCodes()`                 | 모든 행정구역 코드 목록         | `number[]`                            |
-| `isValidCode(code)`             | 유효한 코드인지 확인            | `boolean`                             |
+| 함수                | 설명                        | 반환 타입               |
+| ------------------- | --------------------------- | ----------------------- |
+| `getSidoIcon(code)` | 시도 코드로 아이콘 가져오기 | `Component \| null`     |
+| `getSidoInfo(code)` | 시도 코드로 정보 가져오기   | `SidoInfo \| undefined` |
+| `getAllSidoInfo()`  | 모든 시도 정보 가져오기     | `SidoInfo[]`            |
+
+### 시군구 관련 함수
+
+| 함수                                   | 설명                            | 반환 타입                  |
+| -------------------------------------- | ------------------------------- | -------------------------- |
+| `getSigunguIcon(code)`                 | 시군구 코드로 아이콘 가져오기   | `Component \| null`        |
+| `getSigunguInfo(code)`                 | 시군구 코드로 정보 가져오기     | `SigunguInfo \| undefined` |
+| `getSigunguBySido(sidoCode)`           | 특정 시도의 시군구 목록         | `SigunguInfo[]`            |
+| `getSigunguIconByName(name, options?)` | 이름으로 시군구 아이콘 가져오기 | `Component \| null`        |
+| `getAllSigunguInfo()`                  | 모든 시군구 정보 가져오기       | `SigunguInfo[]`            |
+
+### 기존 호환 함수 (Deprecated)
+
+| 함수                            | 설명                            | 반환 타입                   |
+| ------------------------------- | ------------------------------- | --------------------------- |
+| `getIconByCode(code)`           | 행정구역 코드로 아이콘 가져오기 | `Component \| undefined`    |
+| `getIconByName(name, options?)` | 이름으로 아이콘 가져오기        | `Component \| undefined`    |
+| `getDistrictInfo(code)`         | 행정구역 코드로 정보 가져오기   | `DistrictInfo \| undefined` |
+| `getNameByCode(code)`           | 행정구역 코드로 이름 가져오기   | `string \| undefined`       |
+| `getAllDistrictInfo()`          | 모든 지역 정보 가져오기         | `readonly DistrictInfo[]`   |
+| `getDistrictsByRegion(region)`  | 특정 시/도의 지역 정보          | `DistrictInfo[]`            |
+| `getAllCodes()`                 | 모든 행정구역 코드 목록         | `number[]`                  |
+| `isValidCode(code)`             | 유효한 코드인지 확인            | `boolean`                   |
 
 ### 타입
 
 ```tsx
 import type {
-  RegionCode, // "서울" | "부산" | "대구" | ...
-  SeoulGuCode, // 11110 | 11140 | ...
-  DistrictInfo, // 지역 정보 객체
-  SeoulGuIconComponent, // SVG 컴포넌트 타입
-  GetIconByNameOptions, // { region?: RegionCode }
+  SidoCode, // 11 | 26 | 27 | 28 | 31 | 41 | ...
+  SidoInfo, // 시도 정보 객체
+  SigunguCode, // 11110 | 11140 | ...
+  SigunguInfo, // 시군구 정보 객체
 } from "@apt.today/react-seoul-icons";
 ```
 
-### DistrictInfo 타입
+### SidoInfo 타입
 
 ```tsx
-interface DistrictInfo {
-  code: number; // 행정구역 코드 (예: 11680)
-  region: RegionCode; // 시/도 (예: "서울")
-  regionFullName: string; // 시/도 전체 이름 (예: "서울특별시")
-  name: string; // 구 이름 (예: "강남구")
+interface SidoInfo {
+  code: SidoCode; // 시도 코드 (예: 11)
+  name: string; // 전체 이름 (예: "서울특별시")
+  shortName: string; // 짧은 이름 (예: "서울")
+  englishName: string; // 영문 이름 (예: "Seoul")
+  component: Component | null;
+}
+```
+
+### SigunguInfo 타입
+
+```tsx
+interface SigunguInfo {
+  code: SigunguCode; // 시군구 코드 (예: 11680)
+  sidoCode: SidoCode; // 소속 시도 코드 (예: 11)
+  name: string; // 이름 (예: "강남구")
   shortName: string; // 짧은 이름 (예: "강남")
-  component: SeoulGuIconComponent; // React 컴포넌트
+  component: Component;
 }
 ```
 
 ## 행정구역 코드표
+
+### 시도 코드
+
+| 코드 | 시도       | 컴포넌트명 |
+| ---- | ---------- | ---------- |
+| `11` | 서울특별시 | `Seoul`    |
+| `26` | 부산광역시 | `Busan`    |
+| `27` | 대구광역시 | `Daegu`    |
+| `28` | 인천광역시 | `Incheon`  |
+| `31` | 울산광역시 | `Ulsan`    |
+| `41` | 경기도     | `Gyeonggi` |
+
+### 서울특별시 시군구 (25개)
 
 | 코드    | 행정구   | 컴포넌트명       |
 | ------- | -------- | ---------------- |
@@ -213,6 +333,48 @@ interface DistrictInfo {
 | `11680` | 강남구   | `GangnamGu`      |
 | `11710` | 송파구   | `SongpaGu`       |
 | `11740` | 강동구   | `GangdongGu`     |
+
+### 경기도 시군구 (13개)
+
+| 코드    | 시군구   | 컴포넌트명      |
+| ------- | -------- | --------------- |
+| `41110` | 수원시   | `SuwonSi`       |
+| `41130` | 성남시   | `SeongnamSi`    |
+| `41170` | 안양시   | `AnyangSi`      |
+| `41210` | 광명시   | `GwangmyeongSi` |
+| `41280` | 고양시   | `GoyangSi`      |
+| `41290` | 과천시   | `GwacheonSi`    |
+| `41310` | 구리시   | `GuriSi`        |
+| `41360` | 남양주시 | `NamyangjuSi`   |
+| `41430` | 의왕시   | `UiwangSi`      |
+| `41450` | 하남시   | `HanamSi`       |
+| `41460` | 용인시   | `YonginSi`      |
+| `41570` | 김포시   | `GimpoSi`       |
+| `41590` | 화성시   | `HwaseongSi`    |
+
+### 부산광역시 시군구
+
+| 코드    | 시군구   | 컴포넌트명   |
+| ------- | -------- | ------------ |
+| `26350` | 해운대구 | `HaeundaeGu` |
+
+### 대구광역시 시군구
+
+| 코드    | 시군구 | 컴포넌트명  |
+| ------- | ------ | ----------- |
+| `27260` | 수성구 | `SuseongGu` |
+
+### 인천광역시 시군구
+
+| 코드    | 시군구 | 컴포넌트명 |
+| ------- | ------ | ---------- |
+| `28185` | 연수구 | `YeonsuGu` |
+
+### 울산광역시 시군구
+
+| 코드    | 시군구 | 컴포넌트명 |
+| ------- | ------ | ---------- |
+| `31140` | 남구   | `NamGu`    |
 
 ## Props
 
@@ -246,35 +408,34 @@ function Example() {
 ### API 응답에서 동적으로 사용
 
 ```tsx
-import { getIconByCode, getIconByName } from "@apt.today/react-seoul-icons";
+import { getSidoIcon, getSigunguIcon } from "@apt.today/react-seoul-icons";
 
 // API에서 행정구역 코드를 받은 경우
 function DistrictIcon({ code }: { code: number }) {
-  const Icon = getIconByCode(code);
+  const Icon = getSigunguIcon(code);
   if (!Icon) return null;
   return <Icon width={48} height={48} />;
 }
 
-// API에서 지역명을 받은 경우
-function DistrictIconByName({ name }: { name: string }) {
-  // "서울특별시 강남구" 같은 형식도 OK
-  const Icon = getIconByName(name);
+// 시도 아이콘
+function SidoIcon({ code }: { code: number }) {
+  const Icon = getSidoIcon(code);
   if (!Icon) return null;
-  return <Icon width={48} height={48} />;
+  return <Icon width={64} height={64} />;
 }
 ```
 
 ### 지역 목록 렌더링
 
 ```tsx
-import { getAllDistrictInfo } from "@apt.today/react-seoul-icons";
+import { getSigunguBySido } from "@apt.today/react-seoul-icons";
 
 function DistrictList() {
-  const districts = getAllDistrictInfo();
+  const seoulDistricts = getSigunguBySido(11);
 
   return (
     <div className="grid grid-cols-5 gap-4">
-      {districts.map((district) => (
+      {seoulDistricts.map((district) => (
         <div key={district.code} className="flex flex-col items-center">
           <district.component className="w-12 h-12" />
           <span>{district.name}</span>
@@ -289,7 +450,7 @@ function DistrictList() {
 
 ### 아이콘 저작권
 
-본 라이브러리의 아이콘은 서울특별시 각 자치구청의 공식 심볼/로고로, 공공누리 제1유형(출처표시)에 따라 자유롭게 이용할 수 있습니다.
+본 라이브러리의 아이콘은 각 지방자치단체의 공식 심볼/로고로, 공공누리 제1유형(출처표시)에 따라 자유롭게 이용할 수 있습니다.
 
 ### 라이브러리 코드
 
@@ -301,9 +462,9 @@ function DistrictList() {
 
 이 라이브러리는 [apt.today](https://apt.today) 프로젝트의 일부입니다.
 
-**apt.today**는 부동산 정보를 제공하는 서비스로, 서울특별시 지자체별 고시공고문, 모집공고문, 토지거래허가내역을 비롯한 다양한 아파트 관련 정보를 확인 할 수 있는 플랫폼입니다.
+**apt.today**는 부동산 정보를 제공하는 서비스로, 전국 지자체별 고시공고문, 모집공고문, 토지거래허가내역을 비롯한 다양한 아파트 관련 정보를 확인 할 수 있는 플랫폼입니다.
 
-본 아이콘 라이브러리는 apt.today 서비스에서 서울시 각 행정구의 데이터를 시각적으로 표현하기 위해 개발되었으며, 누구나 자유롭게 사용할 수 있도록 오픈소스로 공개되었습니다.
+본 아이콘 라이브러리는 apt.today 서비스에서 각 행정구역의 데이터를 시각적으로 표현하기 위해 개발되었으며, 누구나 자유롭게 사용할 수 있도록 오픈소스로 공개되었습니다.
 
 ### 관련 프로젝트
 

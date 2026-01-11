@@ -1,26 +1,17 @@
-export * from "./DobongGu";
-export * from "./DongdaemunGu";
-export * from "./DongjakGu";
-export * from "./EunpyeongGu";
-export * from "./GangbukGu";
-export * from "./GangdongGu";
-export * from "./GangnamGu";
-export * from "./GangseoGu";
-export * from "./GeumcheonGu";
-export * from "./GuroGu";
-export * from "./GwanakGu";
-export * from "./GwangjinGu";
-export * from "./JongnoGu";
-export * from "./JungGu";
-export * from "./JungnangGu";
-export * from "./MapoGu";
-export * from "./NowonGu";
-export * from "./SeochoGu";
-export * from "./SeodaemunGu";
-export * from "./SeongbukGu";
-export * from "./SeongdongGu";
-export * from "./SongpaGu";
-export * from "./YangcheonGu";
-export * from "./YeongdeungpoGu";
-export * from "./YongsanGu";
+// 서울특별시 및 자치구
+export * from "./seoul";
 
+// 경기도 및 시군구
+export * from "./gyeonggi";
+
+// 부산광역시 및 시군구
+export * from "./busan";
+
+// 울산광역시 및 시군구
+export * from "./ulsan";
+
+// 대구광역시 및 시군구
+export * from "./daegu";
+
+// 인천광역시 및 시군구
+export * from "./incheon";

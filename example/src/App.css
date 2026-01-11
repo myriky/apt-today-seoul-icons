@@ -212,6 +212,71 @@ header p {
   color: #e5e5e5;
 }
 
+/* 시도별 섹션 */
+.sido-section {
+  margin-bottom: 3rem;
+}
+
+.sido-section:last-child {
+  margin-bottom: 0;
+}
+
+.sido-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  border-left: 4px solid;
+}
+
+.light-mode .sido-header {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-left-color: #3b82f6;
+}
+
+.dark-mode .sido-header {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border-left-color: #60a5fa;
+}
+
+.sido-header-icon {
+  flex-shrink: 0;
+}
+
+.sido-header h3 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.light-mode .sido-header h3 {
+  color: #1e293b;
+}
+
+.dark-mode .sido-header h3 {
+  color: #f1f5f9;
+}
+
+.sido-count {
+  margin-left: auto;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+}
+
+.light-mode .sido-count {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.dark-mode .sido-count {
+  background: #0c4a6e;
+  color: #7dd3fc;
+}
+
 .icon-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -508,4 +573,19 @@ footer code {
 .mini-icons span {
   font-size: 1.2rem;
   color: #999;
+}
+
+/* Highlight box for featured items */
+.demo-box.highlight {
+  border-width: 3px;
+}
+
+.light-mode .demo-box.highlight {
+  border-color: #3b82f6;
+  background: linear-gradient(135deg, #eff6ff 0%, #fff 100%);
+}
+
+.dark-mode .demo-box.highlight {
+  border-color: #60a5fa;
+  background: linear-gradient(135deg, #1e3a5f 0%, #2a2a2a 100%);
 }
